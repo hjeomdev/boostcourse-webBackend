@@ -154,4 +154,44 @@ public class RoleDao {
 
 		return deleteCount;
 	}
+	
+	public int updateRole(Role role) {
+		int updateCount = 0;
+		
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		
+		try {
+			Class.forName( "com.mysql.cj.jdbc.Driver" );
+			
+			conn = DriverManager.getConnection ( dburl, dbUser, dbpasswd );
+			
+			String sql = "update role set description = ? where role_id = ?";
+			
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, role.getDescription());
+			ps.setInt(2,  role.getRoleId());
+			
+			updateCount = ps.executeUpdate();
+
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}finally {
+			if(ps != null) {
+				try {
+					ps.close();
+				}catch(Exception ex) {}
+			} // if
+			
+			if(conn != null) {
+				try {
+					conn.close();
+				}catch(Exception ex) {}
+			} // if
+		} // finally
+		
+		return updateCount;
+	}
 }
