@@ -1,5 +1,8 @@
 package com.yazbyz.diexam01;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Engine {
 	
 	public Engine() {
